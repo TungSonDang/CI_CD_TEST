@@ -40,13 +40,35 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v3
       with:
-        version: '6.5.2'
+        version: '6.7.0'
     - uses: ilammy/msvc-dev-cmd@v1 # This action essentially calls vcvarsall.bat for the latest VS in the runner for x64
     - uses: actions/checkout@v3    # Actually check out the sources. GH Actions can run for events that may not require
                                    # sources (e.g. when someone comments on an issue)
+
+    # Download and put the FluentUI to the compiler 
+    # - name: Download and configure external libraries
+    #   run: |
+    #     if (${{ matrix.os == 'windows-latest' }}) {
+    #       New-Item -ItemType Directory -Force -Path "${{ runner.temp }}/Qt/6.7.0/msvc2019_64/qml/YourLibrary"
+    #       Invoke-WebRequest "https://example.com/yourlibrary.dll" -OutFile "${{ runner.temp }}/Qt/6.7.0/msvc2019_64/qml/YourLibrary/yourlibrary.dll"
+    #     } else {
+    #       mkdir -p ${{ runner.temp }}/Qt/6.7.0/gcc_64/qml/YourLibrary
+    #       wget -O ${{ runner.temp }}/Qt/6.7.0/gcc_64/qml/YourLibrary/yourlibrary.so "https://example.com/yourlibrary.so"
+    #     }
 
     # Here we call CMake manually, there are solutions for that in the Marketplace: https://github.com/marketplace/actions/run-cmake
     - name: Build
       # We don't need to set up the environment variable for CMake to see Qt because the install-qt-action
       # sets up the necessary variables automatically
       run: cmake -S . -B build -G "Ninja Multi-Config" && cmake --build build --config Debug
+
+    # Release the code
+    - name: MakeRelease
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false

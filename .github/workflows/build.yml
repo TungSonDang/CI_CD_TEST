@@ -1,6 +1,10 @@
 name: CI
  
-on: push # when to trigger this. Here, on every push
+on: 
+  push:
+    branches: [ "main" ] # run when push is committed to the main branch
+  pull_request:
+    branches: [ "main" ] # run when pull is performed to the main branch
 jobs:
   build_and_test:
     name: "Build and test"

@@ -32,7 +32,7 @@ jobs:
 
     - name: Install Esri Runtime SDK (Windows)
       run: |
-        wget "https://esrisoftware.esri.com/akdlm/software/ArcGIS_MapsSDK/200.4.0/ArcGIS_Maps_SDK_Qt_Windows_200_4_0.exe?downloadID=NA&type=NA&agolUsername=NA&receiptId=downloads.arcgis.com&__gdb__=1715734189_9cd6573f7b8d772e5e24889476021d33&ext=.exe" -O "Esri_Runtime_SDK.exe"
+        Invoke-WebRequest -Uri "https://esrisoftware.esri.com/akdlm/software/ArcGIS_MapsSDK/200.4.0/ArcGIS_Maps_SDK_Qt_Windows_200_4_0.exe?downloadID=NA&type=NA&agolUsername=NA&receiptId=downloads.arcgis.com&__gdb__=1715734189_9cd6573f7b8d772e5e24889476021d33&ext=.exe" -OutFile "Esri_Runtime_SDK.exe"
         Start-Process -FilePath "Esri_Runtime_SDK.exe" -ArgumentList '/S', '/NCRC' -NoNewWindow -Wait
         echo "ESRI_SDK_PATH=C:\Esri" | Out-File -Append -Encoding ASCII $env:GITHUB_ENV
       if: matrix.os == 'windows-latest'

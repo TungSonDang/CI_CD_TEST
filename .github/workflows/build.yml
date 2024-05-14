@@ -62,6 +62,13 @@ jobs:
       # sets up the necessary variables automatically
       run: cmake -S . -B build -G "Ninja Multi-Config" && cmake --build build --config Debug
 
+    # Save the Artifacts
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ matrix.os }}-artifacts
+        path: .build/
+    
     # Release the code
     - name: MakeRelease
       uses: actions/create-release@v1

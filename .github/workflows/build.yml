@@ -63,19 +63,27 @@ jobs:
       run: cmake -S . -B build -G "Ninja Multi-Config" && cmake --build build --config Debug
 
     # Save the Artifacts
-    - name: Upload Artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: ${{ matrix.os }}-artifacts
-        path: .build/
+    # - name: Upload Artifacts
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: ${{ matrix.os }}-artifacts
+    #     path: .build/
     
     # Release the code
-    - name: MakeRelease
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        draft: false
-        prerelease: false
+    # - name: MakeRelease
+    #   uses: actions/create-release@v1
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #   with:
+    #     tag_name: ${{ github.ref }}
+    #     release_name: Release ${{ github.ref }}
+    #     draft: false
+    #     prerelease: false
+
+    # Send message to a slack channel
+    # - name: Notify Slack
+    #   uses: slackapi/slack-github-action@v1.15.0
+    #   with:
+    #     slack-message: 'Build ${{ github.run_number }} completed successfully!'
+    #     slack-channel-id: 'CXXXXXX'
+    #     slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}

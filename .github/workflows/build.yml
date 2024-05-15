@@ -39,7 +39,7 @@ jobs:
         cd /opt/ArcGIS_Maps_SDK_Qt_Linux64
         ./Setup -s 
         cd --
-        cd /runner
+        cd runner/
         ls
         cd ..
         ./runner/arcgis/maps_sdk/qt200.4.0/postInstaller

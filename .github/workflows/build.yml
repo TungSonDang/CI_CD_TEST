@@ -39,9 +39,10 @@ jobs:
         cd /opt/ArcGIS_Maps_SDK_Qt_Linux64
         ./Setup -s 
         cd --
-        cd runner/
         ls
-        cd ..
+        # cd runner/
+        # ls
+        # cd ..
         ./runner/arcgis/maps_sdk/qt200.4.0/postInstaller
         echo "ESRI_SDK_PATH=/opt/Esri" >> $GITHUB_ENV
       if: matrix.os == 'ubuntu-latest'

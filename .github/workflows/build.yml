@@ -40,7 +40,7 @@ jobs:
         ./Setup -s 
         cd --
         ./arcgis/maps_sdk/qt200.4.0/tools/postInstall.sh
-        echo "ESRI_SDK_PATH=/opt/Esri" >> $GITHUB_ENV
+        echo "ESRI_SDK_PATH=/arcgis" >> $GITHUB_ENV
       if: matrix.os == 'ubuntu-latest'
 
     - name: Install Esri Runtime SDK (Windows)

@@ -27,14 +27,17 @@ jobs:
       uses: jurplel/install-qt-action@v3
       with:
         version: '6.7.0'
-        modules: qtmultimedia qtpositioning qtsensors qtwebsockets
+        modules: qtmultimedia qtpositioning qtsensors qtwebsockets qtwebengine qtwebview
     - uses: ilammy/msvc-dev-cmd@v1 # This action essentially calls vcvarsall.bat for the latest VS in the runner for x64
     - uses: actions/checkout@v3    # Actually check out the sources. GH Actions can run for events that may not require
                                    # sources (e.g. when someone comments on an issue)
     - name: Install Esri Runtime SDK (Linux)
       run: |
         wget -qO- "https://esrisoftware.esri.com/akdlm/software/ArcGIS_MapsSDK/200.4.0/ArcGIS_Maps_SDK_Qt_Linux64_200_4_0.tar.gz?downloadID=NA&type=NA&agolUsername=NA&receiptId=downloads.arcgis.com&__gdb__=1715814419_e36fb866c95ca4661b8a9761b01e1e57&ext=.gz" -O sdk.tar.gz
+        gunzip sdk.tar.gz
         tar -xzf sdk.tar.gz -C /opt
+        cd /opt/ArcGIS_Maps_SDK_Qt_Linux64
+        ./Setup --silent
         echo "ESRI_SDK_PATH=/opt/Esri" >> $GITHUB_ENV
       if: matrix.os == 'ubuntu-latest'
 

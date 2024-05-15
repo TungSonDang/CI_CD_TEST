@@ -17,24 +17,10 @@ jobs:
       run: sudo apt install ninja-build
       if: matrix.os == 'ubuntu-latest' # conditional, runs this step only on the Ubuntu runner
 
-    - name: Install Esri Runtime SDK (Linux)
-      run: |
-        wget -qO- "https://esrisoftware.esri.com/akdlm/software/ArcGIS_MapsSDK/200.4.0/ArcGIS_Maps_SDK_Qt_Linux64_200_4_0.tar.gz?downloadID=NA&type=NA&agolUsername=NA&receiptId=downloads.arcgis.com&__gdb__=1715814419_e36fb866c95ca4661b8a9761b01e1e57&ext=.gz" -O sdk.tar.gz
-        tar -xzf sdk.tar.gz -C /opt
-        echo "ESRI_SDK_PATH=/opt/Esri" >> $GITHUB_ENV
-      if: matrix.os == 'ubuntu-latest'
-
       # Windows installer
     - name: Install Ninja (windows)    # Ninja is not available in GitHub-provided images,
                                        # see https://github.com/actions/runner-images/issues/514
       run: choco install ninja         # So let's install it through Chocolatey
-      if: matrix.os == 'windows-latest'
-
-    - name: Install Esri Runtime SDK (Windows)
-      run: |
-        Invoke-WebRequest -Uri "https://esrisoftware.esri.com/akdlm/software/ArcGIS_MapsSDK/200.4.0/ArcGIS_Maps_SDK_Qt_Windows_200_4_0.exe?downloadID=NA&type=NA&agolUsername=NA&receiptId=downloads.arcgis.com&__gdb__=1715814412_70833fc5fd568fd36262b7ba0714b201&ext=.exe" -OutFile "Esri_Runtime_SDK.exe"
-        Start-Process -FilePath "Esri_Runtime_SDK.exe" -ArgumentList '/S', '/NCRC' -NoNewWindow -Wait
-        echo "ESRI_SDK_PATH=C:\Esri" | Out-File -Append -Encoding ASCII $env:GITHUB_ENV
       if: matrix.os == 'windows-latest'
       
     - name: Install Qt
@@ -45,7 +31,20 @@ jobs:
     - uses: ilammy/msvc-dev-cmd@v1 # This action essentially calls vcvarsall.bat for the latest VS in the runner for x64
     - uses: actions/checkout@v3    # Actually check out the sources. GH Actions can run for events that may not require
                                    # sources (e.g. when someone comments on an issue)
+    - name: Install Esri Runtime SDK (Linux)
+      run: |
+        wget -qO- "https://esrisoftware.esri.com/akdlm/software/ArcGIS_MapsSDK/200.4.0/ArcGIS_Maps_SDK_Qt_Linux64_200_4_0.tar.gz?downloadID=NA&type=NA&agolUsername=NA&receiptId=downloads.arcgis.com&__gdb__=1715814419_e36fb866c95ca4661b8a9761b01e1e57&ext=.gz" -O sdk.tar.gz
+        tar -xzf sdk.tar.gz -C /opt
+        echo "ESRI_SDK_PATH=/opt/Esri" >> $GITHUB_ENV
+      if: matrix.os == 'ubuntu-latest'
 
+    - name: Install Esri Runtime SDK (Windows)
+      run: |
+        Invoke-WebRequest -Uri "https://esrisoftware.esri.com/akdlm/software/ArcGIS_MapsSDK/200.4.0/ArcGIS_Maps_SDK_Qt_Windows_200_4_0.exe?downloadID=NA&type=NA&agolUsername=NA&receiptId=downloads.arcgis.com&__gdb__=1715814412_70833fc5fd568fd36262b7ba0714b201&ext=.exe" -OutFile "Esri_Runtime_SDK.exe"
+        Start-Process -FilePath "Esri_Runtime_SDK.exe" -ArgumentList '/S', '/NCRC' -NoNewWindow -Wait
+        echo "ESRI_SDK_PATH=C:\Esri" | Out-File -Append -Encoding ASCII $env:GITHUB_ENV
+      if: matrix.os == 'windows-latest'
+      
     # Download and put the FluentUI to the compiler 
     # - name: Download and configure external libraries
     #   run: |

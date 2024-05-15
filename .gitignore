@@ -73,3 +73,4 @@ CMakeLists.txt.user*
 *.exe
 
 /build
+/test_ci_cd/build/Desktop_Qt_6_7_0_MSVC2019_64bit-Debug

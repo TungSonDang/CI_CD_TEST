@@ -38,9 +38,9 @@ jobs:
         tar xvf sdk.tar -C /opt
         cd /opt/ArcGIS_Maps_SDK_Qt_Linux64
         ./Setup -s -d /opt
-        cd..
+        cd --
         ls
-        ./arcgis/maps_sdk/qt200.4.0/postInstaller
+        ./opt/arcgis/maps_sdk/qt200.4.0/postInstaller
         echo "ESRI_SDK_PATH=/opt/Esri" >> $GITHUB_ENV
       if: matrix.os == 'ubuntu-latest'
 

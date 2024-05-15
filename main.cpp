@@ -10,7 +10,7 @@
 // See the Sample code usage restrictions document for further information.
 //
 
-#include "Test_arc_esri.h"
+#include "CI_CD_TEST.h"
 
 #include "ArcGISRuntimeEnvironment.h"
 #include "MapQuickView.h"
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     // location services. Create a new API key or access existing API keys from
     // your ArcGIS for Developers dashboard (https://links.esri.com/arcgis-api-keys).
 
-    const QString apiKey = QString("");
+    const QString apiKey = QString("AAPK3c3f805002914017a75241dd7bae359cUn0v1Xj2VJW4GNI0723NGMuUFfCvevITRgD_Rbjbns7_D7K7gaqV95KsDNCKBgqI");
     if (apiKey.isEmpty()) {
         qWarning() << "Use of Esri location services, including basemaps, requires"
                    << "you to authenticate with an ArcGIS identity or set the API Key property.";
@@ -53,10 +53,10 @@ int main(int argc, char *argv[])
     // ArcGISRuntimeEnvironment::setLicense("Place license string in here");
 
     // Register the map view for QML
-    qmlRegisterType<MapQuickView>("Esri.test_arc_esri", 1, 0, "MapView");
+    qmlRegisterType<MapQuickView>("Esri.CI_CD_TEST", 1, 0, "MapView");
 
-    // Register the Test_arc_esri (QQuickItem) for QML
-    qmlRegisterType<Test_arc_esri>("Esri.test_arc_esri", 1, 0, "Test_arc_esri");
+    // Register the CI_CD_TEST (QQuickItem) for QML
+    qmlRegisterType<CI_CD_TEST>("Esri.CI_CD_TEST", 1, 0, "CI_CD_TEST");
 
     // Initialize application view
     QQmlApplicationEngine engine;

@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/qml">
         <file>main.qml</file>
-        <file>Test_arc_esriForm.qml</file>
+        <file>CI_CD_TESTForm.qml</file>
     </qresource>
 </RCC>

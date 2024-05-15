@@ -11,14 +11,14 @@
 //
 
 import QtQuick.Controls
-import Esri.test_arc_esri
+import Esri.CI_CD_TEST
 
 ApplicationWindow {
     visible: true
     width: 800
     height: 600
 
-    Test_arc_esriForm {
+    CI_CD_TESTForm {
         anchors.fill: parent
     }
 }

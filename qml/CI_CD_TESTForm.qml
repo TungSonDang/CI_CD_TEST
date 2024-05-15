@@ -12,7 +12,7 @@
 
 import QtQuick
 import QtQuick.Controls
-import Esri.test_arc_esri
+import Esri.CI_CD_TEST
 
 Item {
 
@@ -25,7 +25,7 @@ Item {
     }
 
     // Declare the C++ instance which creates the map etc. and supply the view
-    Test_arc_esri {
+    CI_CD_TEST {
         id: model
         mapView: view
     }

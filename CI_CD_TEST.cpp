@@ -10,7 +10,7 @@
 // See the Sample code usage restrictions document for further information.
 //
 
-#include "Test_arc_esri.h"
+#include "CI_CD_TEST.h"
 
 #include "Map.h"
 #include "MapQuickView.h"
@@ -18,20 +18,20 @@
 
 using namespace Esri::ArcGISRuntime;
 
-Test_arc_esri::Test_arc_esri(QObject *parent /* = nullptr */)
+CI_CD_TEST::CI_CD_TEST(QObject *parent /* = nullptr */)
     : QObject(parent)
-    , m_map(new Map(BasemapStyle::ArcGISStreets, this))
+    , m_map(new Map(BasemapStyle::ArcGISStreetsNight, this))
 {}
 
-Test_arc_esri::~Test_arc_esri() {}
+CI_CD_TEST::~CI_CD_TEST() {}
 
-MapQuickView *Test_arc_esri::mapView() const
+MapQuickView *CI_CD_TEST::mapView() const
 {
     return m_mapView;
 }
 
 // Set the view (created in QML)
-void Test_arc_esri::setMapView(MapQuickView *mapView)
+void CI_CD_TEST::setMapView(MapQuickView *mapView)
 {
     if (!mapView || mapView == m_mapView) {
         return;

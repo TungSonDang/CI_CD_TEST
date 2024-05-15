@@ -12,7 +12,7 @@
 #-------------------------------------------------
 cmake_minimum_required(VERSION 3.5)
 
-project(test_arc_esri LANGUAGES CXX)
+project(CI_CD_TEST LANGUAGES CXX)
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
@@ -43,20 +43,20 @@ find_package(ArcGISRuntime 200.3.0 COMPONENTS REQUIRED Cpp)
 
 set(SOURCE_FILES
   main.cpp
-  Test_arc_esri.cpp
-  Test_arc_esri.h
+  CI_CD_TEST.cpp
+  CI_CD_TEST.h
   qml/qml.qrc
   Resources/Resources.qrc
   $<$<BOOL:${WIN32}>:Win/Resources.rc>
   $<$<BOOL:${APPLE}>:Mac/AppIcon.icns>)
 
 if(ANDROID)
-  qt_add_executable(test_arc_esri ${SOURCE_FILES})
+  qt_add_executable(CI_CD_TEST ${SOURCE_FILES})
 else()
-  qt_add_executable(test_arc_esri MACOSX_BUNDLE ${SOURCE_FILES})
+  qt_add_executable(CI_CD_TEST MACOSX_BUNDLE ${SOURCE_FILES})
   # IOS uses static Runtimecore Framework
   if(IOS)
-    set_target_properties(test_arc_esri PROPERTIES INSTALL_RPATH @executable_path/Frameworks 
+    set_target_properties(CI_CD_TEST PROPERTIES INSTALL_RPATH @executable_path/Frameworks 
     XCODE_EMBED_FRAMEWORKS ${ArcGISRuntime_runtimecore_LIB} 
     XCODE_EMBED_FRAMEWORKS_CODE_SIGN_ON_COPY TRUE)
   endif()
@@ -67,17 +67,17 @@ else()
 
   # Copy required dynamic libraries to the build folder as a post-build step.
   if(DEFINED ArcGISRuntime_LIBRARIES)
-    add_custom_command(TARGET test_arc_esri POST_BUILD
+    add_custom_command(TARGET CI_CD_TEST POST_BUILD
       COMMAND ${CMAKE_COMMAND} -E copy_if_different
       ${ArcGISRuntime_LIBRARIES}
-      $<TARGET_FILE_DIR:test_arc_esri>)
+      $<TARGET_FILE_DIR:CI_CD_TEST>)
   endif()
 endif()
 
-target_compile_definitions(test_arc_esri
+target_compile_definitions(CI_CD_TEST
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 
-target_link_libraries(test_arc_esri PRIVATE
+target_link_libraries(CI_CD_TEST PRIVATE
   Qt6::Core
   Qt6::Quick
   Qt6::Multimedia
@@ -87,11 +87,11 @@ target_link_libraries(test_arc_esri PRIVATE
   ArcGISRuntime::Cpp)
 
 if(ANDROID OR IOS)
-  target_link_libraries(test_arc_esri PRIVATE Qt6::Bluetooth)
+  target_link_libraries(CI_CD_TEST PRIVATE Qt6::Bluetooth)
 endif()
 
 if(ANDROID)
-  target_link_libraries(test_arc_esri PRIVATE Qt::CorePrivate)
+  target_link_libraries(CI_CD_TEST PRIVATE Qt::CorePrivate)
 
   set(PROJECT_DEPLOYABLE_LIBS
     ${ArcGISRuntime_LIBRARIES})
@@ -110,8 +110,8 @@ if(ANDROID)
   # Setting this property changed at Qt6 see doc below.
   # https://doc.qt.io/qt-6/cmake-target-property-qt-android-extra-libs.html
 
-  set_property(TARGET test_arc_esri PROPERTY QT_ANDROID_EXTRA_LIBS ${PROJECT_DEPLOYABLE_LIBS_STRING} ${ANDROID_EXTRA_LIBS})
-  get_property(EXTRA_LIBS TARGET test_arc_esri PROPERTY QT_ANDROID_EXTRA_LIBS)
+  set_property(TARGET CI_CD_TEST PROPERTY QT_ANDROID_EXTRA_LIBS ${PROJECT_DEPLOYABLE_LIBS_STRING} ${ANDROID_EXTRA_LIBS})
+  get_property(EXTRA_LIBS TARGET CI_CD_TEST PROPERTY QT_ANDROID_EXTRA_LIBS)
   if(NOT EXTRA_LIBS MATCHES "libssl" OR NOT EXTRA_LIBS MATCHES "libcrypto")
       message(WARNING "openssl libraries are missing, check the project CMakeLists.txt and set up openssl environment")
   endif()

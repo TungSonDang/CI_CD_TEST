@@ -10,8 +10,8 @@
 // See the Sample code usage restrictions document for further information.
 //
 
-#ifndef TEST_ARC_ESRI_H
-#define TEST_ARC_ESRI_H
+#ifndef CI_CD_TEST_H
+#define CI_CD_TEST_H
 
 namespace Esri::ArcGISRuntime {
 class Map;
@@ -22,7 +22,7 @@ class MapQuickView;
 
 Q_MOC_INCLUDE("MapQuickView.h")
 
-class Test_arc_esri : public QObject
+class CI_CD_TEST : public QObject
 {
     Q_OBJECT
 
@@ -30,8 +30,8 @@ class Test_arc_esri : public QObject
                    mapViewChanged)
 
 public:
-    explicit Test_arc_esri(QObject *parent = nullptr);
-    ~Test_arc_esri() override;
+    explicit CI_CD_TEST(QObject *parent = nullptr);
+    ~CI_CD_TEST() override;
 
 signals:
     void mapViewChanged();
@@ -44,4 +44,4 @@ private:
     Esri::ArcGISRuntime::MapQuickView *m_mapView = nullptr;
 };
 
-#endif // TEST_ARC_ESRI_H
+#endif // CI_CD_TEST_H

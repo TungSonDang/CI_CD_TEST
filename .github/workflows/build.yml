@@ -33,23 +33,36 @@ jobs:
                                    # sources (e.g. when someone comments on an issue)
     - name: Install Esri Runtime SDK (Linux)
       run: |
-        wget -qO- "https://esrisoftware.esri.com/akdlm/software/ArcGIS_MapsSDK/200.4.0/ArcGIS_Maps_SDK_Qt_Linux64_200_4_0.tar.gz?downloadID=NA&type=NA&agolUsername=NA&receiptId=downloads.arcgis.com&__gdb__=1715836392_20cc6f8832deecbf43e2b31cd39fc5ea&ext=.gz" -O sdk.tar.gz
+        wget -qO- "https://esrisoftware.esri.com/akdlm/software/ArcGIS_MapsSDK/200.4.0/ArcGIS_Maps_SDK_Qt_Linux64_200_4_0.tar.gz?downloadID=NA&type=NA&agolUsername=NA&receiptId=downloads.arcgis.com&__gdb__=1715907205_0d4951f63e645588fb34bfe561a22c86&ext=.gz" -O sdk.tar.gz
         gunzip sdk.tar.gz
         tar xvf sdk.tar -C /opt
         cd /opt/ArcGIS_Maps_SDK_Qt_Linux64
-        ./Setup -s 
-        cd --
+        ./Setup -s -d /opt
+        cd ..
         ./arcgis/maps_sdk/qt200.4.0/tools/postInstall.sh
         ls
-        echo "ArcGISRuntime_INSTALL_DIR=/home/arcgis" >> $GITHUB_ENV
+        echo "ArcGISRuntime_INSTALL_DIR=/opt/arcgis" >> $GITHUB_ENV
       if: matrix.os == 'ubuntu-latest'
+
+    - name: Print environment variables (Linux)
+      if: matrix.os == 'ubuntu-latest'
+      run: printenv
+      shell: bash
+
+    - name: List directories (Linux)
+      if: matrix.os == 'ubuntu-latest'
+      run: ls -l /opt
+      shell: bash
+
 
     - name: Install Esri Runtime SDK (Windows)
       run: |
-        Invoke-WebRequest -Uri "https://esrisoftware.esri.com/akdlm/software/ArcGIS_MapsSDK/200.4.0/ArcGIS_Maps_SDK_Qt_Windows_200_4_0.exe?downloadID=NA&type=NA&agolUsername=NA&receiptId=downloads.arcgis.com&__gdb__=1715814412_70833fc5fd568fd36262b7ba0714b201&ext=.exe" -OutFile "Esri_Runtime_SDK.exe"
+        Invoke-WebRequest -Uri "https://esrisoftware.esri.com/akdlm/software/ArcGIS_MapsSDK/200.4.0/ArcGIS_Maps_SDK_Qt_Windows_200_4_0.exe?downloadID=NA&type=NA&agolUsername=NA&receiptId=downloads.arcgis.com&__gdb__=1715907236_84ce7a4e6a72ffce2d4a1158ad811922&ext=.exe" -OutFile "Esri_Runtime_SDK.exe"
         Start-Process -FilePath "Esri_Runtime_SDK.exe" -ArgumentList '/S', '/NCRC' -NoNewWindow -Wait
         echo "ESRI_SDK_PATH=C:\Esri" | Out-File -Append -Encoding ASCII $env:GITHUB_ENV
       if: matrix.os == 'windows-latest'
+
+     
       
     # Download and put the FluentUI to the compiler 
     # - name: Download and configure external libraries

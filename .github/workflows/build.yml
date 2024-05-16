@@ -37,11 +37,11 @@ jobs:
         gunzip sdk.tar.gz
         tar xvf sdk.tar -C /opt
         cd /opt/ArcGIS_Maps_SDK_Qt_Linux64
-        ./Setup -s -d /opt
-        cd ..
-        ./arcgis/maps_sdk/qt200.4.0/tools/postInstall.sh
-        ls
-        echo "ArcGISRuntime_INSTALL_DIR=/opt/arcgis" >> $GITHUB_ENV
+        ./Setup -s -d /home/runner/work/CI_CD_TEST/CI_CD_TEST
+        # cd ..
+        # ./arcgis/maps_sdk/qt200.4.0/tools/postInstall.sh
+        # ls
+        # echo "ArcGISRuntime_INSTALL_DIR=/opt/arcgis" >> $GITHUB_ENV
       if: matrix.os == 'ubuntu-latest'
 
     - name: Print environment variables (Linux)
